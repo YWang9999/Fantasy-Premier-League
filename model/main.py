@@ -3,7 +3,7 @@
 """
 
 
-def main():
+def main(request):
     """
         Entry point - Do not change name of this function.
     """
