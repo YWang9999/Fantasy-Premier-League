@@ -7,4 +7,4 @@ def main():
     """
         Entry point - Do not change name of this function.
     """
-    return "Hello Fantasy Football"
+    return ("Hello from Jonny, Yi and Andreas")
