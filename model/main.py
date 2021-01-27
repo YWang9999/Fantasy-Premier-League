@@ -9,5 +9,5 @@ def main(request):
     """
     data = request.get_json(force=True)
     print("Data sent is ", data)
-    
-    return jsonify({'sum': data['a'] + data['b']})
+   
+    return jsonify(data['existing_team'] , data['free_transfers'])
