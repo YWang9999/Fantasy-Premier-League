@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "lbghack2021team14",
+  "private_key_id": "7efa230284787f3cff5fe1192d8eb17fbf87eab3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCiCCenk/6+wnGb\nv04T0frFAng3KxqCS1B9/VrPGeAyXvUU7PjXkiyTsNvZ9z8K4wa2+cbKAMMZOequ\nJJDMMpo3XVFCr8HdahFbujrxjWUP88MdcRR2iT9NkXjpNkhoGdZSeKf7pMNXU5WU\nwH/6wiU/v3ROLICJ0n6QA8ySHMwhYxFpDP6IWgEa7XuRV1qzBARGX0v9bG0iXIxj\n01e07CfBrtWf/Vs7cMh+zSaYKYm+wRseT/K1fzT0JkhBojVJudEZr1dRlMq2AaWD\ni9uAWK8HUEKfHzx9+EooxONrtvLGDC9CHGlMwN/CCf2ZbDGLU1bL7SsKlr/yiKkn\nseIYLOrvAgMBAAECggEALMQZBJ0IXDbHgZLEpQg2AtkwUnmnrMjXF7/4J1DMVs5S\nYvInvBNIGpPZ4eoD8mOP1tzCdcvpGx6bvnoewTPX1KUFDuoVIzGrUw7sOxFoExSz\nWv6De05m/WzMHY6gSZad1pI8QvOd/pH6uSrIEQUzml2waeq0pp9P1UUfb1zibvSJ\nqqkpuz8Xpk3Vszit7BxirGx7aDAgeA17ZwOAt7LP+tSlU+RSrj7aSbUyNoaSVcqO\nx0gZ3t2Pj2a9bXP7M3Nzay2p8l/fMCGKGaB6U24OPnpPUwTjHVkrdlRmE6KejO/Z\nWXgWN1eL1uKwEs4bysuPWtwj2ll2TFcZM2xSseVohQKBgQDaU1sSSD7YgWUIrPFg\nt+A+9ID9mVMoccmpUMglwPxrWCzpAfg7Lkz11CENBtCvrVJ2/XiUyubw5goXwM6l\nn0r8RoCnyGui3YSSSw19m0xM95S0MumqCniqU30aXC5c8yKkgfH05oIahngvi321\nkEDr1y8k9NXZtcnhUkvLTmBLlQKBgQC9/f595nEYIwfjAM++vk3fFT1wodkyegrB\nIoM+ERjKt+WkMSE0EEHL1HAVMFEvAeqoFuAS9hOG5U8cqDJQ0h4k9eQx4sJqtsdt\nMjjZHRhny07rGnpwbGH/6WprTN72U20ciTeZ1t6MP4covULrIBpav049wXgTmoq+\nNkTTjJlbcwKBgDVDwuNJ9vMxVmnwb49OLQqO8m1sm8oxQKbrS3lShQLXZ1WNoncl\ny6bqEwovkHhby9O18VYzznYVWX8EDiaAH3Y+6SKGFiSM8MwUPX1Yhxv8By6TgUh3\n94puhgYJWVJaCyihf1tlZXZ9OhM3b/r876naPOlCRm4wGMm9HzrBq2KlAoGAYdUv\nvf7yz54CSqc5UpxGFxCl4aDF6hMkBI3UDRrarFCDxMeztE6GwwHycUa/Fziib8nP\nupPSPE1KLpSBzFJWSWwBBJsix7a0/Iq28T3lOlVbnv60e72jvRahwP0FdsxAzEfw\nRJx7Xra7z4OduNuAFqiaDnzYayfSN95UFKc6tPcCgYB1vBgXYnXYWR2ZfRhaLgAD\n4ieZ9ehUNlvMnsgVQ1/OIebbJHYiJq3LpMCIzRERp3b593ZHkxmXh3NJNbVFmb9d\nuvXLF6zYeP/I87wGxR5e0A27XD9iRtPZQEy7iblWznzr1lwSkEJ7Lj4yAuTgGmhW\n3uFx+t8YCuWBXrikoadfTg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "compute-engine@lbghack2021team14.iam.gserviceaccount.com",
+  "client_id": "100781576367540686978",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/compute-engine%40lbghack2021team14.iam.gserviceaccount.com"
+}
