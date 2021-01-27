@@ -13,3 +13,4 @@ soupsieve==1.9.5
 urllib3==1.25.7
 scikit-learn==0.22.1
 PuLP==2.4
+pandas-gbq==0.14.1
