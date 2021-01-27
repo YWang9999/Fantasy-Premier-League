@@ -28,11 +28,13 @@ def main():
 
 
         # Drops rows with target NA which are not most recent month
-        filtered_train = train[train.target.notna()].drop(['element_type', 'team', 'team_code'], axis=1)
+        filtered_train = train[train.target.notna()].drop(['element_type', 'team',
+                                                           'team_code', 'chance_of_playing_next_round'], axis=1)
 
         X_train_pd = filtered_train.drop('target', axis=1)
         y_train_pd = filtered_train['target']
-        X_test_pd = test.drop(['target', 'element_type', 'team', 'team_code'], axis=1)
+        X_test_pd = test.drop(['target', 'element_type', 'team',
+                               'team_code',  'chance_of_playing_next_round'], axis=1)
 
         # Normalize
         scaler = StandardScaler()
@@ -49,7 +51,8 @@ def main():
         pred = pd.DataFrame(reg.predict(X_test))
         pred.rename(columns={0: 'prediction'}, inplace=True)
         pred.index = test.index
-        pred = pred.merge(test[['element_type', 'team', 'team_code', 'value_av_last_1_gws']],
+        pred = pred.merge(test[['element_type', 'team', 'team_code',
+                                'value_av_last_1_gws', 'chance_of_playing_next_round']],
                           left_index=True, right_index=True)
         pred.rename(columns={'value_av_last_1_gws': 'value'})
         print(pred.shape)
