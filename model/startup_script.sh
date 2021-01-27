@@ -8,9 +8,9 @@ cd Fantasy-Premier-League/
 sudo apt install python3-pip
 pip3 install -r requirements.txt
 
-
+gcloud secrets versions access 1 --secret="service-account-key-compute-engine-user2" > model/key.json
 export PROJECT_ID=lbghack2021team14
-export PATH_TO_JSON_KEY=model/lbghack2021team14-7efa23028478.json
+export PATH_TO_JSON_KEY=model/key.json
 
 # Run modelling
 python3 global_scraper.py
