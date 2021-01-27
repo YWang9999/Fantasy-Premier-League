@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 import os
-from config import RAW_DATA_PATH, INGESTED_DATA, FEATURE_DATA, PAST_WEEKS_NUM, BASE_FEATURES
+import pandas_gbq
+from config import *
 
 
 def create_index(df):
@@ -44,7 +45,8 @@ def create_feature_over_time(base_features, past_weeks_num, features_df, base_fe
 
 
 def main():
-    gw_df = pd.read_csv(os.path.join(RAW_DATA_PATH, INGESTED_DATA)).drop_duplicates()
+
+    gw_df = pandas_gbq.read_gbq(' SELECT * FROM fpl_staging_data.' + INGESTED_DATA, project_id=PROJECT_ID).drop_duplicates()
 
     gw_df_team_features = gw_df.pipe(create_index).pipe(add_own_team_features)
 
@@ -63,7 +65,7 @@ def main():
 
     features_with_time_df = features_with_time_df.drop('is_home', axis=1)
     features_with_time_df = features_with_time_df.reset_index()
-    features_with_time_df.drop_duplicates().to_csv(os.path.join(RAW_DATA_PATH, FEATURE_DATA), index=False)
+    features_with_time_df.drop_duplicates().to_gbq(destination_table = 'fpl_staging_data.'+FEATURE_DATA, if_exists="replace")
 
 
 if __name__ == "__main__":

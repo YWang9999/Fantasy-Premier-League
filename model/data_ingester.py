@@ -1,7 +1,7 @@
 import pandas as pd
-from config import WEBSCRAPE_DATA_PATH, FEATURE_COLUMNS, RAW_DATA_PATH, INGESTED_DATA
+from config import *
 import os
-
+import pandas_gbq
 
 def gameweek_filepaths(players_path):
     filepaths = []
@@ -67,7 +67,13 @@ def main():
     features_df = pd.concat(features_year_df_dict.values())
     gw_raw_df = pd.merge(features_df, position_df, on='player')
 
-    gw_raw_df.to_csv(os.path.join(RAW_DATA_PATH, INGESTED_DATA), index=False)
+
+
+    gw_raw_df.to_gbq(destination_table = 'fpl_staging_data.'+INGESTED_DATA, if_exists="replace")
+
+
+
+
 
 
 if __name__ == "__main__":

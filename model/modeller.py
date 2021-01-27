@@ -1,17 +1,18 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn import ensemble
-from config import RAW_DATA_PATH, FEATURE_DATA, PREDICTIONS
+from config import *
 import os
 
 
 def main():
-    features = pd.read_csv(os.path.join(RAW_DATA_PATH, FEATURE_DATA)).drop_duplicates()
+    features = pandas_gbq.read_gbq(' SELECT * FROM fpl_staging_data.' + FEATURE_DATA, project_id=PROJECT_ID).drop_duplicates()
+
     features = features.set_index(['player', 'career_gw'])
-    params = {'n_estimators': 500,
-              'max_depth': 4,
+    params = {'n_estimators': 25,
+              'max_depth': 2,
               'min_samples_split': 5,
-              'learning_rate': 0.01,
+              'learning_rate': 0.1,
               'loss': 'ls'}
     players = pd.DataFrame(columns=['player', 'prediction', 'position'])
     positions = [1, 2, 3, 4]
@@ -48,7 +49,8 @@ def main():
     players = players.sort_values(by='prediction', ascending=False)
     players['pred_rank'] = players['prediction'].rank(method='max', ascending=False)
     players = players[['player', 'prediction', 'position']]
-    players.drop_duplicates().to_csv(os.path.join(RAW_DATA_PATH, PREDICTIONS), index=False)
+    
+    players.drop_duplicates().to_gbq(destination_table = 'fpl_staging_data.'+PREDICTIONS, if_exists="replace")
 
 
 if __name__ == "__main__":

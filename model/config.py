@@ -1,5 +1,11 @@
-WEBSCRAPE_DATA_PATH = "C:/Dev/web_scrape_FPL/data/"
-RAW_DATA_PATH = "C:/Dev/Data/Fantasy-Premier-League/"
+
+from google.oauth2 import service_account
+import os
+import pandas_gbq
+
+
+WEBSCRAPE_DATA_PATH = os.path.abspath(os.path.join(os.getcwd(), 'data')) 
+
 FEATURE_COLUMNS = ['assists', 'bonus', 'bps', 'clean_sheets', 'creativity', 'element',
                    'fixture', 'goals_conceded', 'goals_scored', 'ict_index', 'influence',
                    'kickoff_time', 'minutes', 'opponent_team', 'own_goals',
@@ -8,9 +14,9 @@ FEATURE_COLUMNS = ['assists', 'bonus', 'bps', 'clean_sheets', 'creativity', 'ele
                    'transfers_balance', 'transfers_in', 'transfers_out', 'value',
                    'was_home', 'yellow_cards']
 
-INGESTED_DATA = "gw_raw.csv"
-FEATURE_DATA = "features_df.csv"
-PREDICTIONS = "predictions.csv"
+INGESTED_DATA = "gw_raw"
+FEATURE_DATA = "features_df"
+PREDICTIONS = "predictions"
 PAST_WEEKS_NUM = [1, 3, 6, 12]
 BASE_FEATURES = ['assists', 'bonus', 'bps', 'clean_sheets', 'creativity',
                  'goals_conceded', 'goals_scored', 'ict_index', 'influence',
@@ -18,3 +24,14 @@ BASE_FEATURES = ['assists', 'bonus', 'bps', 'clean_sheets', 'creativity',
                  'selected', 'threat', 'total_points',
                  'transfers_balance', 'transfers_in', 'transfers_out', 'value',
                  'yellow_cards', 'team_goals_scored', 'team_points']
+
+
+
+credentials = service_account.Credentials.from_service_account_file(
+    os.environ.get("PATH_TO_JSON_KEY"),
+)
+# Update the in-memory credentials cache (added in pandas-gbq 0.7.0).
+pandas_gbq.context.credentials = credentials
+
+PROJECT_ID = os.environ.get("PROJECT_ID")
+pandas_gbq.context.project = PROJECT_ID
