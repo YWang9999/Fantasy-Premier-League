@@ -112,7 +112,7 @@ def main():
 
     gw_raw_df = pd.concat(gw_raw_year_df_dict.values())
 
-
+    gw_raw_df = gw_raw_df.rename({'team' : 'team_id'}, axis=1)
 
     gw_raw_df.to_gbq(destination_table = 'fpl_staging_data.'+INGESTED_DATA, if_exists="replace")
 
