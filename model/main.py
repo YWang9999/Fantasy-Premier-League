@@ -8,5 +8,6 @@ def main(request):
         Entry point - Do not change name of this function.
     """
     data = request.get_json(force=True)
+    print("Data sent is ", data)
     
     return jsonify({'sum': data['a'] + data['b']})
