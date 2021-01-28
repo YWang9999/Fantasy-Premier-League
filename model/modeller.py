@@ -59,7 +59,7 @@ def main():
         pred_pos_dict[pos] = pred_sorted
         print(pred_sorted.shape)
 
-    output_preds = pd.concat(pred_pos_dict.values())
+    output_preds = pd.concat(pred_pos_dict.values()).reset_index()
     output_preds.to_gbq(destination_table = 'fpl_staging_data.'+PREDICTIONS, if_exists="replace")
 
 if __name__ == "__main__":
