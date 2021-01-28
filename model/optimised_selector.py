@@ -21,6 +21,7 @@ import os
 import time
 from typing import List
 from pulp import *
+from config import RAW_DATA_PATH, WEBSCRAPE_DATA_PATH
 
 PLAYERS = None
 MATRIX = None
@@ -29,8 +30,17 @@ def importData()-> pd.DataFrame:
     """
         Read predictions data from csv into pandas DataFrame.
     """
-    path = os.path.abspath(os.path.join(os.getcwd(), ''))
-    df = pd.read_csv(path + '/_prediction.csv', index_col=0)
+    path = RAW_DATA_PATH
+    source_path2 = WEBSCRAPE_DATA_PATH + "2020-21/players_raw.csv"
+
+    df = pd.read_csv(path + '/predictions.csv', index_col=0)
+
+    price_list = pd.read_csv(source_path2).drop_duplicates()
+    price_list['player'] = price_list['first_name'] + "_" + price_list['second_name']
+    price_list = price_list[['player', 'element_type']]
+    df = pd.merge(df, price_list, how='inner', left_on=['player', 'element_type'],
+                       right_on=['player', 'element_type'])
+
     return df
 
 def subsetData(df, sortby, n):
@@ -49,11 +59,11 @@ def optimumTeam(budget, number_of_players=None, full_squad= True):
 
     if number_of_players is not None:
         # take subset of total players
-        data = subsetData(data, "y_pred", number_of_players)
+        data = subsetData(data, "prediction", number_of_players)
     
     player = [str(i) for i in data.index]
-    point = {str(i): data['y_pred'][i] for i in data.index} 
-    cost = {str(i): data['value'][i] for i in data.index}
+    point = {str(i): data['prediction'][i] for i in data.index} 
+    cost = {str(i): data['value_av_last_1_gws'][i] for i in data.index}
     gk = {str(i): 1 if data['element_type'][i] == 1 else 0 for i in data.index}
     defe = {str(i): 1 if data['element_type'][i] == 2 else 0 for i in data.index}
     mid = {str(i): 1 if data['element_type'][i] == 3 else 0 for i in data.index}
@@ -105,7 +115,7 @@ def optimumTeam(budget, number_of_players=None, full_squad= True):
 
     new_squad = data[data.index.isin(player_indices)].sort_values(["element_type"])
     print(new_squad)
-    print("cost is ", new_squad["value"].sum())
+    print("cost is ", new_squad["value_av_last_1_gws"].sum())
 
 
 def best_transfer(full_squad, squad, budget, transfers):
@@ -113,11 +123,11 @@ def best_transfer(full_squad, squad, budget, transfers):
     data = importData()
 
     data["my_squad"] = np.where(data.index.isin(squad), 1, 0)
-    my_squad_value = data.loc[data["my_squad"] == 1, "value"].sum()
+    my_squad_value = data.loc[data["my_squad"] == 1, "value_av_last_1_gws"].sum()
 
     player = [str(i) for i in data.index]
-    point = {str(i): data['y_pred'][i] for i in data.index} 
-    cost = {str(i): data['value'][i] for i in data.index}
+    point = {str(i): data['prediction'][i] for i in data.index} 
+    cost = {str(i): data['value_av_last_1_gws'][i] for i in data.index}
     gk = {str(i): 1 if data['element_type'][i] == 1 else 0 for i in data.index}
     defe = {str(i): 1 if data['element_type'][i] == 2 else 0 for i in data.index}
     mid = {str(i): 1 if data['element_type'][i] == 3 else 0 for i in data.index}
