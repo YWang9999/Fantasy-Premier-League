@@ -16,6 +16,7 @@
         - GK = 1, DEF ≥3, MID ≥3, FWD≥1
 """
 import pandas as pd
+import pandas_gbq
 import numpy as np
 import os
 import time
