@@ -1,6 +1,7 @@
 import pandas as pd
+import numpy as np
 import sys
-from config import TARGET_WEEKS_INTO_FUTURE
+from config import TARGET_WEEKS_INTO_FUTURE, RAW_DATA_PATH, WEBSCRAPE_DATA_PATH
 
 
 def pick_team(out, budget, position_column, points_column, name_column, price_column, formation=[4, 4, 2]):
@@ -240,33 +241,32 @@ def chance_of_playing_scaling(prediction, chance_of_playing, target_weeks_into_f
 
 
 def main(save_team, from_scratch, formation, budget, max_transfers):
-    source_path = ".../data/"
-    source_path2 = ".../Fantasy-Premier-League/data/2020-21/players_raw.csv"
-    destination_path = ".../data/"
+    source_path = RAW_DATA_PATH
+    source_path2 = WEBSCRAPE_DATA_PATH + "2020-21/players_raw.csv"
+    destination_path = RAW_DATA_PATH
 
     predictions = pd.read_csv(source_path + "predictions.csv").drop_duplicates()
     price_list = pd.read_csv(source_path2).drop_duplicates()
     price_list['player'] = price_list['first_name'] + "_" + price_list['second_name']
     price_list['price'] = price_list['now_cost'] / 10
-    price_list['position'] = price_list['element_type']
     price_list['perc_chance_of_playing'] = np.where(
          price_list['chance_of_playing_next_round'] == "None", 
          "100", 
          price_list['chance_of_playing_next_round']
     ).astype(float) / 100
-    players = price_list[['player', 'price', 'team', 'position', 'perc_chance_of_playing']]
-    players = pd.merge(players, predictions, how='inner', left_on=['player', 'position'],
-                       right_on=['player', 'position'])
+    players = price_list[['player', 'price', 'team', 'element_type', 'perc_chance_of_playing']]
+    players = pd.merge(players, predictions, how='inner', left_on=['player', 'element_type'],
+                       right_on=['player', 'element_type'])
 
     players["pre_scaling_prediction"] = players["prediction"]
     players["prediction"] = players.apply(lambda x: chance_of_playing_scaling(x.pre_scaling_prediction, x.perc_chance_of_playing, TARGET_WEEKS_INTO_FUTURE), axis=1)
 
     if from_scratch:
-        team = pick_team(players, budget, 'position', 'prediction', 'player', 'price', formation)
+        team = pick_team(players, budget, 'element_type', 'prediction', 'player', 'price', formation)
     else:
         team = pd.read_csv(source_path + 'selected_team.csv')
         team = pd.merge(team['player'], players, on='player')
-        team = pick_transfers(team, players, budget, 'position', 'prediction', 'player', 'price', formation,
+        team = pick_transfers(team, players, budget, 'element_type', 'prediction', 'player', 'price', formation,
                               max_transfers)
     if save_team:
         team.to_csv(source_path + 'selected_team.csv', index=False)
