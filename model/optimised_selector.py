@@ -21,15 +21,23 @@ import os
 import time
 from typing import List
 from pulp import *
-from config import *
-
+from config import WEBSCRAPE_DATA_PATH, PREDICTIONS, PROJECT_ID
+from google.cloud import secretmanager
 PLAYERS = None
 MATRIX = None
+
+def get_secret():
+    secrets_client = secretmanager.SecretManagerServiceClient()
+    request = {"name": f"projects/{PROJECT_ID}/secrets/service-account-key-compute-engine-user2/versions/latest"}
+    response = secrets_client.access_secret_version(request)
+    secret_string = response.payload.data.decode("UTF-8")
+
 
 def importData()-> pd.DataFrame:
     """
         Read predictions data from csv into pandas DataFrame.
     """
+
     # path = RAW_DATA_PATH
     source_path2 = WEBSCRAPE_DATA_PATH + "/2020-21/players_raw.csv"
 
@@ -192,6 +200,9 @@ def best_transfer(full_squad, squad, budget, transfers):
 
     
 if __name__ == '__main__':
+
+    get_secret()
+
     optimumTeam(
         budget = 829,
         number_of_players=None,

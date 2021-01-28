@@ -14,3 +14,4 @@ urllib3==1.25.7
 scikit-learn==0.22.1
 PuLP==2.4
 pandas-gbq==0.14.1
+google-cloud-secret-manager==2.1.0
