@@ -21,7 +21,7 @@ import os
 import time
 from typing import List
 from pulp import *
-from config import RAW_DATA_PATH, WEBSCRAPE_DATA_PATH
+from config import *
 
 PLAYERS = None
 MATRIX = None
@@ -30,10 +30,10 @@ def importData()-> pd.DataFrame:
     """
         Read predictions data from csv into pandas DataFrame.
     """
-    path = RAW_DATA_PATH
-    source_path2 = WEBSCRAPE_DATA_PATH + "2020-21/players_raw.csv"
+    # path = RAW_DATA_PATH
+    source_path2 = WEBSCRAPE_DATA_PATH + "/2020-21/players_raw.csv"
 
-    df = pd.read_csv(path + '/predictions.csv', index_col=0)
+    df = pandas_gbq.read_gbq(' SELECT * FROM fpl_staging_data.' + PREDICTIONS, project_id=PROJECT_ID)
 
     price_list = pd.read_csv(source_path2).drop_duplicates()
     price_list['player'] = price_list['first_name'] + "_" + price_list['second_name']
@@ -116,13 +116,14 @@ def optimumTeam(budget, number_of_players=None, full_squad= True):
     new_squad = data[data.index.isin(player_indices)].sort_values(["element_type"])
     print(new_squad)
     print("cost is ", new_squad["value_av_last_1_gws"].sum())
+    return new_squad
 
 
 def best_transfer(full_squad, squad, budget, transfers):
 
     data = importData()
 
-    data["my_squad"] = np.where(data.index.isin(squad), 1, 0)
+    data["my_squad"] = np.where(data["player"].isin(squad), 1, 0)
     my_squad_value = data.loc[data["my_squad"] == 1, "value_av_last_1_gws"].sum()
 
     player = [str(i) for i in data.index]
@@ -187,7 +188,7 @@ def best_transfer(full_squad, squad, budget, transfers):
     new_squad = data[data.index.isin(player_indices)].sort_values(["element_type"])
     print(new_squad)
 
-    return
+    return new_squad
 
     
 if __name__ == '__main__':
