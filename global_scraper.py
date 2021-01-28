@@ -4,12 +4,13 @@ from getters import *
 from collector import collect_gw, merge_gw
 from understat import parse_epl_data
 import csv
+WEBSCRAPE_DATA_PATH = os.path.abspath(os.path.join(os.getcwd(), 'data')) 
 
 def parse_data():
     """ Parse and store all the data
     """
     season = '2020-21'
-    base_filename = 'data/' + season + '/'
+    base_filename = WEBSCRAPE_DATA_PATH + '/' + season + '/'
     print("Getting data")
     data = get_data()
     print("Parsing summary data")
