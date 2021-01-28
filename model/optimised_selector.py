@@ -21,16 +21,9 @@ import os
 import time
 from typing import List
 from pulp import *
-from config import WEBSCRAPE_DATA_PATH, PREDICTIONS, PROJECT_ID
-from google.cloud import secretmanager
+from config_cloud_function import WEBSCRAPE_DATA_PATH, PREDICTIONS, PROJECT_ID
 PLAYERS = None
 MATRIX = None
-
-def get_secret():
-    secrets_client = secretmanager.SecretManagerServiceClient()
-    request = {"name": f"projects/{PROJECT_ID}/secrets/service-account-key-compute-engine-user2/versions/latest"}
-    response = secrets_client.access_secret_version(request)
-    secret_string = response.payload.data.decode("UTF-8")
 
 
 def importData()-> pd.DataFrame:
@@ -200,8 +193,6 @@ def best_transfer(full_squad, squad, budget, transfers):
 
     
 if __name__ == '__main__':
-
-    get_secret()
 
     optimumTeam(
         budget = 829,
