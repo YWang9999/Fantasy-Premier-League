@@ -28,17 +28,17 @@ pandas_gbq.context.credentials = credentials
 PROJECT_ID = os.environ.get("PROJECT_ID")
 pandas_gbq.context.project = PROJECT_ID
 
-# PARAMS = {'n_estimators': 500,
-#           'max_depth': 4,
-#           'min_samples_split': 5,
-#           'learning_rate': 0.01,
-#           'loss': 'ls'}
+PARAMS = {'n_estimators': 500,
+          'max_depth': 4,
+          'min_samples_split': 5,
+          'learning_rate': 0.01,
+          'loss': 'ls'}
 
-PARAMS = {'n_estimators': 100,
-'max_depth': 2,
-'min_samples_split': 5,
-'learning_rate': 0.2,
-'loss': 'ls'}
+# PARAMS = {'n_estimators': 100,
+# 'max_depth': 2,
+# 'min_samples_split': 5,
+# 'learning_rate': 0.2,
+# 'loss': 'ls'}
           
 PAST_WEEKS_NUM = [1, 3, 6, 12]
 TARGET_TYPE = "AVG"
