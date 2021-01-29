@@ -22,7 +22,8 @@ import os
 import time
 from typing import List
 from pulp import *
-from config_cloud_function import WEBSCRAPE_DATA_PATH, PREDICTIONS, PROJECT_ID
+# from config_cloud_function import WEBSCRAPE_DATA_PATH, PREDICTIONS, PROJECT_ID
+from config import *
 PLAYERS = None
 MATRIX = None
 
@@ -35,13 +36,16 @@ def importData()-> pd.DataFrame:
     # path = RAW_DATA_PATH
     source_path2 = WEBSCRAPE_DATA_PATH + "/2020-21/players_raw.csv"
 
-    df = pandas_gbq.read_gbq(' SELECT * FROM fpl_staging_data.' + PREDICTIONS, project_id=PROJECT_ID)
+    df = pandas_gbq.read_gbq(' SELECT * FROM fpl_staging_data.' + PREDICTIONS + ' as t WHERE t.career_gw = "2020/21 | 20"', project_id=PROJECT_ID)
 
     price_list = pd.read_csv(source_path2).drop_duplicates()
     price_list['player'] = price_list['first_name'] + "_" + price_list['second_name']
     price_list = price_list[['player', 'element_type']]
     df = pd.merge(df, price_list, how='inner', left_on=['player', 'element_type'],
                        right_on=['player', 'element_type'])
+
+    # df = df[df["career_gw"] == '2020/21 | 21']
+    print(df["career_gw"].value_counts().sort_values())
 
     return df
 
@@ -72,7 +76,7 @@ def optimumTeam(budget, number_of_players=None, full_squad= True):
     stri = {str(i): 1 if data['element_type'][i] == 4 else 0 for i in data.index}
     teams = [0]
     for t in range(1, 21):
-        team = {str(i): 1 if data['team'][i] == t else 0 for i in data.index}
+        team = {str(i): 1 if data['team_id'][i] == t else 0 for i in data.index}
         teams.append(team)
     stri = {str(i): 1 if data['element_type'][i] == 4 else 0 for i in data.index}
 
@@ -196,9 +200,9 @@ def best_transfer(full_squad, squad, budget, transfers):
 if __name__ == '__main__':
 
     optimumTeam(
-        budget = 829,
+        budget = 1000,
         number_of_players=None,
-        full_squad = False
+        full_squad = True
     )
 
     # my_squad = [
