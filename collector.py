@@ -26,7 +26,7 @@ def get_positions(directory):
     positions = {}
     names = {}
     pos_dict = {'1': "GK", '2': "DEF", '3': "MID", '4': "FWD"}
-    fin = open(directory + "/players_raw.csv", 'rU',encoding="utf-8")
+    fin = open(directory + "/players_raw.csv", 'rU', encoding="utf-8")
     reader = csv.DictReader(fin)
     for row in reader:
         positions[int(row['id'])] = pos_dict[row['element_type']] 

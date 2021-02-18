@@ -1,5 +1,6 @@
-WEBSCRAPE_DATA_PATH = "C:/Dev/web_scrape_FPL/data/"
-RAW_DATA_PATH = "C:/Dev/Data/Fantasy-Premier-League/"
+WEBSCRAPE_DATA_PATH = "C:/Dev/Fantasy_Premier_League_YW/data"
+OUTPUT_DATA_PATH = "C:/Dev/Fantasy_Premier_League_YW/pipeline"
+RAW_DATA_PATH = "C:/Dev/Fantasy_Premier_League_YW/model"
 FEATURE_COLUMNS = ['assists', 'bonus', 'bps', 'clean_sheets', 'creativity', 'element',
                    'fixture', 'goals_conceded', 'goals_scored', 'ict_index', 'influence',
                    'kickoff_time', 'minutes', 'opponent_team', 'own_goals',
